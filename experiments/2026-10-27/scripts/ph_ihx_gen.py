@@ -4,7 +4,8 @@ f='R1336MZZZ'; PA=lambda g:(g+1.01325)  # bar abs
 hs=lambda P,q:CP.PropsSI('H','P',P*1e5,'Q',q,f)/1e3
 import sys; sys.path.insert(0,'.')
 from states import states
-S,X=states(sys.argv[1]); OUT=sys.argv[2]; TAG=sys.argv[3]
+S,X=states(sys.argv[1]); import json as _j; _d=_j.load(open(sys.argv[1]))
+FL={'11/12','9B'}|({'4'} if _d['T12']<=CP.PropsSI('T','P',(_d['P508']+1.01325)*1e5,'Q',1,'R1336MZZZ')-273.15 else set())|({'5'} if _d['T13']<=CP.PropsSI('T','P',(_d['P509']+1.01325)*1e5,'Q',1,'R1336MZZZ')-273.15 else set()); OUT=sys.argv[2]; TAG=sys.argv[3]
 Pc=CP.PropsSI('Pcrit',f)/1e5; Pl=np.logspace(np.log10(1.5),np.log10(0.6*Pc),300)
 fig,ax=plt.subplots(figsize=(7.6,5.4),dpi=200)
 for q in (0,1): ax.plot([hs(p,q) for p in Pl],Pl,color='#9a9a9a',lw=1.1)
@@ -24,11 +25,11 @@ lab={'1':'1 C1 in','2':'2 C1 out','3':'3 C2 in','4':'4 C2 out','5':'5 GC in','6'
 off={'1':(-38,-12),'13':(8,-4),'2':(5,-10),'3':(-10,8),'4':(6,4),'5':(6,-10),'6':(-50,6),'7':(6,6),'7v':(-14,6),'8':(4,8),
      '9A':(-20,-16),'10A':(6,8),'9B':(6,-4),'10B':(-16,-14),'11/12':(-60,10)}
 for k,(h,p) in S.items():
-    alt=k in('9B','10B'); fl=k in('11/12','9B')
+    alt=k in('9B','10B'); fl=k in FL
     ax.plot(h,p,'o',ms=5,mfc='white' if fl else B,mec=B,zorder=5,alpha=.6 if alt else 1)
     ax.annotate(lab[k],(h,p),textcoords='offset points',xytext=off[k],fontsize=6.8,color='#333')
-ax.set_yscale('log'); ax.set_ylim(2.05,16); ax.set_xlim(285,500)
-t=[2.5,3,4,5,6,8,10,12,15]; ax.set_yticks(t); ax.set_yticklabels([str(x) for x in t]); ax.minorticks_off()
+ax.set_yscale('log'); ax.set_ylim(2.05,max(v[1] for v in S.values())*1.12); ax.set_xlim(285,500)
+t=[x for x in (2.5,3,4,5,6,8,10,12,15,18) if x<=ax.get_ylim()[1]]; ax.set_yticks(t); ax.set_yticklabels([str(x) for x in t]); ax.minorticks_off()
 ax.set_xlabel(r'$h$ (kJ kg$^{-1}$)'); ax.set_ylabel(r'$P$ (bar abs)'); ax.grid(alpha=.25,lw=.5)
 ax.plot([],[],color=R,lw=3,alpha=.45,label='IHX hot side 8→9A / cold side 12→13')
 ax.plot([],[],color=B,lw=1,ls=':',label='alternative path using P605 (flagged)')
