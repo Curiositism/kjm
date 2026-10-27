@@ -10,7 +10,8 @@ Pc=CP.PropsSI('Pcrit',f)/1e5; Pl=np.logspace(np.log10(1.5),np.log10(0.98*Pc),300
 fig,ax=plt.subplots(figsize=(7.6,5.4),dpi=200)
 for q in (0,1): ax.plot([hs(p,q) for p in Pl],Pl,color='#9a9a9a',lw=1.1)
 B='#1f5fa8'; R='#c0392b'; G='#7f7f7f'
-def ln(seq,**k): ax.plot([S[s][0] for s in seq],[S[s][1] for s in seq],**k)
+def ln(seq,**k):
+    seq=[s for s in seq if s in S]; ax.plot([S[s][0] for s in seq],[S[s][1] for s in seq],**k)
 ln(['1','2'],color=B,lw=1.7); ln(['3','4','5','6','7'],color=B,lw=1.7)
 ln(['2','3'],color=B,lw=1.2); ln(['7','7v','3'],color=G,lw=1,ls='-.')
 ln(['7','8'],color=B,lw=1.7)
@@ -19,7 +20,7 @@ ln(['8','9B','10B'],color=B,lw=1,ls=':')
 ln(['11/12','13','1'],color=B,lw=1.7)
 # IHX highlight
 for a,b in (('8','9A'),('11/12','13')): ln([a,b],color=R,lw=3,alpha=.45)
-lab={'1':'1 C1 in','2':'2 C1 out','3':'3 C2 in','4':'4 C2 out','5':'5 GC in','6':'6 GC out','7':f"7 EXV1 out (x={X['x7']:.3f})",
+lab={'1':'1 C1 in','2':'2 C1 out','3':'3 C2 in','4':'4 C2 out' + (' = GC in' if '5' not in S else ''),'5':'5 GC in','6':'6 GC out','7':f"7 EXV1 out (x={X['x7']:.3f})",
      '7v':'7v','8':'8 IHX hot in','9A':'9A IHX hot out (T23@P608)','10A':f"10A evap in (x={X['x10A']:.3f})",
      '9B':'9B hf(P605) [alt]','10B':f"10B (x={X['x10B']:.3f}) [alt]",'11/12':'11 evap out = 12 IHX cold in*','13':'13 IHX cold out'}
 off={'1':(-38,-12),'13':(8,-4),'2':(5,-10),'3':(-10,8),'4':(6,4),'5':(6,-10),'6':(-50,6),'7':(6,6),'7v':(-14,6),'8':(4,8),

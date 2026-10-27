@@ -10,6 +10,9 @@ def states(fn):
     S={'1':(HV(d['T11'],PA(d['P507'])),PA(d['P507'])),'2':(HV(d['T06'],PA(d['P506'])),PA(d['P506'])),
        '3':(HV(d['T26'],PA(d['P608'])),PA(d['P608'])),'4':(HV(d['T12'],PA(d['P508'])),PA(d['P508'])),
        '5':(HV(d['T13'],PA(d['P509'])),PA(d['P509'])),'6':(H(d['T14'],PA(d['P510'])),PA(d['P510']))}
+    # rule: if 2nd-stage discharge is superheated (T12 > Tsat(P508)), the high-pressure side is anchored on point 4 (GC inlet point 5 dropped)
+    sh4=d['T12']-(CP.PropsSI('T','P',PA(d['P508'])*1e5,'Q',1,f)-K)
+    if sh4>0: S.pop('5')
     S['7']=(S['6'][0],PA(d['P603'])); S['7v']=(hs(PA(d['P608']),1),PA(d['P608']))
     def HL(T,P):
         ts=CP.PropsSI('T','P',P*1e5,'Q',0,f)-K

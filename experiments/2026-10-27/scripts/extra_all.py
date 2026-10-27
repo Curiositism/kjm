@@ -52,6 +52,9 @@ print(f"V1in={m3/r1:.4f} ratio1={r2/r1:.3f}; V2in={m1/r3:.4f} ratio2={r4/r3:.3f}
 print(f"econ energy in={m1*h6:.1f} out={m3*h8+mi*hg(P8):.1f}; x_inj energy={(h6-h8)/(hg(P8)-h8):.4f}; flow frac={(mi/m1):.4f}")
 print(f"408 {d.get('rho408',0)*1000:.1f} vs sat vap @P608 {CP.PropsSI('D','P',P8,'Q',1,f):.1f}")
 print(f"superheats: C1in {d['T11']-Ts(PA(d['P507'])):.2f} C1out {d['T06']-Ts(PA(d['P506'])):.2f} C2in {d['T26']-Ts(P8):.2f} C2out {d['T12']-Ts(PA(d['P508'])):.2f} GCin {d['T13']-Ts(PA(d['P509'])):.2f} GCsub {Ts(PA(d['P510']))-d['T14']:.2f}")
+t4=CP.PropsSI('T','P',PA(d['P508']),'Q',1,f)-K
+if d['T12']>t4:
+    h6g=H(d['T14'],PA(d['P510'])); print(f"GC refrigerant Q (point-4 rule, T12-Tsat={d['T12']-t4:+.2f}) = {m1*(HV(d['T12'],PA(d['P508']))-h6g):.1f} kW")
 print(f"GC approach T14-T03={d['T14']-d['T03']:.2f}; GC dP={d['P509']-d['P510']:.2f}; evap Tsat in/out {Ts(P10):.2f}/{Ts(PA(d['P602'])):.2f}; T02-Tsat(602)={d['T02']-Ts(PA(d['P602'])):.2f}")
 # water side
 Tm=(d['T03']+d['T04'])/2; Pw=PA((d['P503']+d['P504'])/2) if 'P503' in d and 'P504' in d else PA(2.6)  # water-side pressure: measured mean if given
