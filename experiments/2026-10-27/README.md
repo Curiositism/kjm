@@ -1,6 +1,6 @@
 # 2026-10-27 스팀 히트펌프 스냅샷 분석
 
-350kW급 160°C 스팀 히트펌프(R1336mzz(Z)) 통합 모니터링 화면 스냅샷 7장과 설계 목표 사이클 화면을 분석한 자료입니다.
+350kW급 160°C 스팀 히트펌프(R1336mzz(Z)) 통합 모니터링 화면 스냅샷 10장과 설계 목표 사이클 화면을 분석한 자료입니다.
 
 - 실험일지(문서): https://claude.ai/artifact/JKdZ7ttdEjdADRkpH8oCvN
 - 시각: 사진 EXIF 기준(KST). 화면 Save Time(11:12)은 모든 사진에서 같아서 사용하지 않음.
@@ -15,9 +15,12 @@
 | photos/1213_snapshot5_monitor.jpg | 스냅샷 5 (12:13:37) |
 | photos/1216_snapshot6_monitor.jpg | 스냅샷 6 (12:16:05) |
 | photos/1223_snapshot7_monitor.jpg | 스냅샷 7 (12:23:52) |
-| data/snapshot{1..7}.json | 화면 판독값 (T: °C, P: bar.g, 유량 kg/s, 밀도 g/mL, V610 m³/h) |
-| figures/ph_snapshot{1..7}_ihx.png | 스냅샷별 P-h 선도 (IHX 입출구 표시) |
-| figures/ph_snapshots_vs_design.png | 스냅샷 1~7과 설계 목표 비교 |
+| photos/1233_snapshot8_monitor.jpg | 스냅샷 8 (12:33:17) |
+| photos/1239_snapshot9_monitor.jpg | 스냅샷 9 (12:39:23) |
+| photos/1243_snapshot10_monitor.jpg | 스냅샷 10 (12:43:37) |
+| data/snapshot{1..10}.json | 화면 판독값 (T: °C, P: bar.g, 유량 kg/s, 밀도 g/mL, V610 m³/h) |
+| figures/ph_snapshot{1..10}_ihx.png | 스냅샷별 P-h 선도 (IHX 입출구 표시) |
+| figures/ph_snapshots_vs_design.png | 스냅샷 1~10과 설계 목표 비교 |
 | scripts/ | 분석 스크립트 (CoolProp 8.0.0, matplotlib) |
 
 ## 재현
@@ -30,6 +33,8 @@ python3 ph_ihx_gen.py ../data/snapshot1.json ph1.png "snapshot 1"
 ```
 
 `ph_cmp.py`와 `design.py`는 스크래치 경로(`run/…`)를 기준으로 작성돼 있어 실행 전 경로 수정이 필요합니다.
+
+`stage2_sh.py`: 2단 입구 과열도 수단별 효과 모델 (스냅샷 7 기준).
 
 가정: 절대압 = bar.g + 1.01325 bar(표준 대기압).
 

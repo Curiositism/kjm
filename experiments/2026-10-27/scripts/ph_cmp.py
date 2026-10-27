@@ -10,7 +10,7 @@ fig,ax=plt.subplots(figsize=(7.4,5.2),dpi=200)
 for q in (0,1): ax.plot([CP.PropsSI('H','P',p*1e5,'Q',q,f)/1e3 for p in Pl],Pl,color='#9a9a9a',lw=1.1)
 def ln(S,seq,**k): ax.plot([S[s][0] for s in seq],[S[s][1] for s in seq],**k)
 ln(D,['4',"4'",'4"','5','6','7','8','8f','9','1','2','3','4'],color='#b5651d',lw=1.3,marker='o',ms=3,label='design target')
-for fn,c,lab in (('run/data.json','#dbe6f4','experiment snapshot 1 (11:39)'),('run/data2.json','#b6cbe8','experiment snapshot 2 (11:50)'),('run/data3.json','#86abdb','experiment snapshot 3 (11:57)'),('run/data4.json','#4a7fc1','experiment snapshot 4 (12:07)'),('run/data5.json','#163a6e','experiment snapshot 5 (12:13)'),('run/data6.json','#0e2a55','experiment snapshot 6 (12:16)'),('run/data7.json','#000814','experiment snapshot 7 (12:23)')):
+for fn,c,lab in (('run/data.json','#dbe6f4','experiment snapshot 1 (11:39)'),('run/data2.json','#b6cbe8','experiment snapshot 2 (11:50)'),('run/data3.json','#86abdb','experiment snapshot 3 (11:57)'),('run/data4.json','#4a7fc1','experiment snapshot 4 (12:07)'),('run/data5.json','#163a6e','experiment snapshot 5 (12:13)'),('run/data6.json','#0e2a55','experiment snapshot 6 (12:16)'),('run/data7.json','#0a2245','experiment snapshot 7 (12:23)'),('run/data8.json','#081a36','experiment snapshot 8 (12:33)'),('run/data9.json','#061530','experiment snapshot 9 (12:39)'),('run/data10.json','#000000','experiment snapshot 10 (12:43)')):
     S,_=states(fn)
     ln(S,['1','2','3','4','5','6','7','8','9A','10A','11/12','13','1'],color=c,lw=1.5,marker='o',ms=3,label=lab)
 ax.set_yscale('log'); ax.set_ylim(2,45); ax.set_xlim(290,520)

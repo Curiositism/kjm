@@ -6,7 +6,7 @@ import sys; sys.path.insert(0,'.')
 from states import states
 S,X=states(sys.argv[1]); import json as _j; _d=_j.load(open(sys.argv[1]))
 FL={'11/12','9B'}|({'4'} if _d['T12']<=CP.PropsSI('T','P',(_d['P508']+1.01325)*1e5,'Q',1,'R1336MZZZ')-273.15 else set())|({'5'} if _d['T13']<=CP.PropsSI('T','P',(_d['P509']+1.01325)*1e5,'Q',1,'R1336MZZZ')-273.15 else set()); OUT=sys.argv[2]; TAG=sys.argv[3]
-Pc=CP.PropsSI('Pcrit',f)/1e5; Pl=np.logspace(np.log10(1.5),np.log10(0.6*Pc),300)
+Pc=CP.PropsSI('Pcrit',f)/1e5; Pl=np.logspace(np.log10(1.5),np.log10(0.98*Pc),300)
 fig,ax=plt.subplots(figsize=(7.6,5.4),dpi=200)
 for q in (0,1): ax.plot([hs(p,q) for p in Pl],Pl,color='#9a9a9a',lw=1.1)
 B='#1f5fa8'; R='#c0392b'; G='#7f7f7f'
@@ -29,7 +29,7 @@ for k,(h,p) in S.items():
     ax.plot(h,p,'o',ms=5,mfc='white' if fl else B,mec=B,zorder=5,alpha=.6 if alt else 1)
     ax.annotate(lab[k],(h,p),textcoords='offset points',xytext=off[k],fontsize=6.8,color='#333')
 ax.set_yscale('log'); ax.set_ylim(2.05,max(v[1] for v in S.values())*1.12); ax.set_xlim(285,500)
-t=[x for x in (2.5,3,4,5,6,8,10,12,15,18) if x<=ax.get_ylim()[1]]; ax.set_yticks(t); ax.set_yticklabels([str(x) for x in t]); ax.minorticks_off()
+t=[x for x in (2.5,3,4,5,6,8,10,12,15,20,25,30) if x<=ax.get_ylim()[1]]; ax.set_yticks(t); ax.set_yticklabels([str(x) for x in t]); ax.minorticks_off()
 ax.set_xlabel(r'$h$ (kJ kg$^{-1}$)'); ax.set_ylabel(r'$P$ (bar abs)'); ax.grid(alpha=.25,lw=.5)
 ax.plot([],[],color=R,lw=3,alpha=.45,label='IHX hot side 8→9A / cold side 12→13')
 ax.plot([],[],color=B,lw=1,ls=':',label='alternative path using P605 (flagged)')
